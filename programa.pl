@@ -39,5 +39,16 @@ estaAcompaniado(Nombre,Dia,Hora):-
     cuandoAtiende(OtroNombre,Dia,Hora),
     Nombre \= OtroNombre.
 
+% Punto 4
 
+posibilidadDeAtencion(Dia,Posibilidades):-
+    findall(Nombres,quienesAtienden(Dia,_,Nombres),PosibilidadesRepetidas),
+    list_to_set(PosibilidadesRepetidas, Posibilidades).
+    
+
+quienesAtienden(Dia,Hora,Nombres):-
+    between(0,24,Hora),
+    findall(Nombre,cuandoAtiende(Nombre,Dia,Hora),Nombres).
+
+% Punto extra: inversibilidad y ...
 
