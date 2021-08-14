@@ -29,5 +29,15 @@ cuandoAtiende(Nombre,Dia,Hora):-
     atiende(Nombre,Dia,horario(Inicio,Fin)),
     between(Inicio, Fin, Hora).
 
+% Punto 3
+
+foreverAlone(Nombre,Dia,Hora):-
+    cuandoAtiende(Nombre,Dia,Hora),
+    not(estaAcompaniado(Nombre,Dia,Hora)).
+
+estaAcompaniado(Nombre,Dia,Hora):-
+    cuandoAtiende(OtroNombre,Dia,Hora),
+    Nombre \= OtroNombre.
+
 
 
