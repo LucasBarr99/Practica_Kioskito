@@ -50,5 +50,43 @@ quienesAtienden(Dia,Hora,Nombres):-
     between(0,24,Hora),
     findall(Nombre,cuandoAtiende(Nombre,Dia,Hora),Nombres).
 
-% Punto extra: inversibilidad y ...
+% Punto extra: inversibilidad y orden superior. La inversibilidad para las distintas combinaciones de Nombres en el predicado 'quienesAtienden'
+% permite que el findall que es de orden superior junte esas combinaciones que satisfacen a 'quienesAtienden' en una lista. 
 
+% Punto 5
+
+vendio(dodain,fecha(lunes,10,agosto),[golosinas(1200),cigarrillos([jocke]),golosinas(50)]).
+vendio(dodain,fecha(miercoles,12,agosto),[bebidas(si,8),bebidas(no,1),golosinas(10)]).
+vendio(martu,fecha(miercoles,12,agosto),[golosinas(1000),cigarrillos([chesterfield,colorado,parisiennes])]).
+vendio(lucas,fecha(martes,11,agosto),[golosinas(600)]).
+vendio(lucas,fecha(martes,18,agosto),[bebidas(no,2),cigarrillos([derby])]).
+
+kioskerxSuertudx(Nombre):-
+    kioskerx(Nombre),
+    forall(diaQueVendio(Nombre,Fecha),primeraVentaFueImportante(Nombre,Fecha)).
+
+diaQueVendio(Nombre,Fecha):-
+    vendio(Nombre,Fecha,_).
+
+primeraVentaFueImportante(Nombre,Fecha):-
+    primeraVenta(Nombre,Fecha,PrimeraVenta),
+    importante(PrimeraVenta).
+
+primeraVenta(Nombre,Fecha,PrimeraVenta):-
+    vendio(Nombre,Fecha,Ventas),
+    nth1(1,Ventas,PrimeraVenta).
+
+importante(golosinas(Precio)):-
+    Precio > 100.
+
+importante(cigarrillos(Marcas)):-
+    length(Marcas, Cantidad),
+    Cantidad > 2.
+
+importante(bebidas(si,_)).
+
+importante(bebidas(_,Cantidad)):-
+    Cantidad > 5.
+    
+kioskerx(Nombre):-
+    vendio(Nombre,_,_).
