@@ -22,3 +22,12 @@ atiende(vale,Dia,Horario):- atiende(juanC,Dia,Horario).
 
 % "maiu está pensando si hace el horario de 0 a 8 los martes y miércoles" no se hace nada, maiu no atiende el kioskito y por principio de universo cerrado
 % solo lo que esta definido en la base de conocimientos es verdadero.
+
+% Punto 2
+
+cuandoAtiende(Nombre,Dia,Hora):-
+    atiende(Nombre,Dia,horario(Inicio,Fin)),
+    between(Inicio, Fin, Hora).
+
+
+
